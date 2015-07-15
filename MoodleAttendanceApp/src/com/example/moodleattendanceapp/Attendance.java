@@ -56,6 +56,8 @@ public class Attendance extends JSONObject implements Parcelable
 			return new Attendance[size];
 		}
 	};
+	
+	
     
     public Attendance(JSONObject obj) throws JSONException
     {
@@ -115,6 +117,34 @@ public class Attendance extends JSONObject implements Parcelable
     {
         this.sessions = sessions;
     }
+    
+    public void refreshSessions (JSONObject sessionObj)
+    {
+    	
+		try {
+			
+			
+			
+			JSONArray sessionsArr = sessionObj.getJSONArray("sessions");
+			
+			sessions.clear();
+			
+			for(int i=0;i<sessionsArr.length();i++)
+			{
+				Log.i("MAA", "adding sessions "+i);
+				Sessions s=new Sessions(sessionsArr.getJSONObject(i));
+				sessions.add(s);
+			}
+			
+			Log.i("MAA", "from attendance class size is "+sessions.size());
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+    }
 
     public String getName ()
     {
@@ -162,4 +192,6 @@ public class Attendance extends JSONObject implements Parcelable
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
 }

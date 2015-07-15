@@ -4,17 +4,9 @@
     <string name="app_name">GPERI Attendance</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
-    <string-array name="CountryArray">
-        <item>India</item>
-        <item>UK</item>
-        <item>USA</item>
-        <item>UAE</item>
-        <item>NewZeland</item>
-        <item>Japan</item>
-        <item>Russia</item>
-    </string-array>
-
     <string name="title_activity_user_course">UserCourseActivity</string>
+    <string name="title_activity_course_attendance">CourseAttendanceActivity</string>
+    <string name="title_activity_show_session">ShowSessionActivity</string>
+    <string name="title_activity_session">SessionActivity</string>
 
 </resources>

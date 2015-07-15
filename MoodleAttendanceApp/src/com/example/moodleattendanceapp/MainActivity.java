@@ -1,46 +1,33 @@
 package com.example.moodleattendanceapp;
 
-import java.net.URL;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -48,7 +35,7 @@ public class MainActivity extends Activity {
 	ActionBar mActionBar;
 	EditText etUserName, etPassword;
 	Button btnUserLogin;
-	String uname = "", pwd = "", response = "";
+	String uname = "", pwd = "", response2 = "";
 	
 	// Fragment fragment_UserCourse = null;
 	// flag for Internet connection status
@@ -59,6 +46,8 @@ public class MainActivity extends Activity {
 	
 	// Connection detector class
 	ConnectionDetector cd;
+	
+	ProgressDialog progressDialog;
 
 	// ListView CourseList;
 	// ImageView imgProPic;
@@ -75,14 +64,15 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(R.layout.activity_main);
 		SetActionBar();
+		setContentView(R.layout.activity_main);
+		
 
 		// Log.i("bef call frag", "Login frag");
 
 		// Log.i("aftr call", "Login frag");
 
-		mSharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+		mSharedPreferences = getSharedPreferences("moodle_attendance_app_shared_pref", Context.MODE_PRIVATE);
 
 		etUserName = (EditText) findViewById(R.id.etUsername);
 		etPassword = (EditText) findViewById(R.id.etPassword);
@@ -95,7 +85,7 @@ public class MainActivity extends Activity {
 
 			etUserName.setText(mSharedPreferences.getString("Username", ""));
 			etPassword.setText(mSharedPreferences.getString("Password", ""));
-
+			cbRememberMe.setChecked(true);
 			// Intent i=new
 			// Intent(getApplicationContext(),UserCourseActivity.class);
 			// startActivity(i);
@@ -142,10 +132,14 @@ public class MainActivity extends Activity {
 		cd = new ConnectionDetector(getApplicationContext());
 
 		btnUserLogin.setOnClickListener(new OnClickListener() {
+			
+			
 
 			@Override
-			public void onClick(View v) { // TODO Auto-generated method stub
-				UserLogin(v);
+			public void onClick(View view) { // TODO Auto-generated method stub
+				
+				UserLogin(view);
+				
 			}
 		});
 	}
@@ -154,7 +148,7 @@ public class MainActivity extends Activity {
 		mActionBar = getActionBar();
 		mActionBar.setDisplayShowTitleEnabled(true);
 		mActionBar.setBackgroundDrawable(new ColorDrawable(Color
-				.parseColor("#FFB917")));
+				.parseColor("#FF6D00")));
 		mActionBar.setTitle("Login");
 	}
 
@@ -181,8 +175,11 @@ public class MainActivity extends Activity {
 				{
 					
 				}*/
-				AsyncCallWS task = new AsyncCallWS();
-				task.execute("");
+				
+				makeServiceCall(v.getContext(),uname,pwd);
+				
+				//AsyncCallWS task = new AsyncCallWS();
+				//task.execute("");
 
 			} else {
 				// Internet connection is not present
@@ -269,7 +266,7 @@ public class MainActivity extends Activity {
 					  mEditor.putString("user_token", u.getToken());
 					  mEditor.putString("user_fullname", u.getFull_name());
 					  mEditor.putString("user_propic_url", u.getProfile_pic_url());
-					  mEditor.putString("user_role_name", u.getRole_short_name());
+					  //mEditor.putString("user_role_name", u.getRole_short_name());
 					  mEditor.commit();
 				}
 				/*else
@@ -318,12 +315,13 @@ public class MainActivity extends Activity {
 
 	@SuppressWarnings("deprecation")
 	public void fetchJSON() {
+		
 		Log.i("In fetchJson", "ok");
 
 		Log.i("In C==null", "ok");
 		try {
 			// Log.i("URL", url);
-			String FinalURL = "http://rutvik.ddns.net/webservice.php?method=login&user_name="
+			String FinalURL = "http://192.168.1.100/webservice.php?method=login&user_name="
 					+ uname + "&password=" + pwd;
 			// Log.i("Final URL", FinalURL);
 			HttpPost post = new HttpPost(FinalURL);
@@ -345,16 +343,16 @@ public class MainActivity extends Activity {
 
 			HttpEntity entity = resp.getEntity();
 
-			response = EntityUtils.toString(entity);
-			Log.v("response info : ", "Hello My Res : " + response);
-			if (response.indexOf("error") == -1) {
+			response2 = EntityUtils.toString(entity);
+			Log.v("response info : ", "Hello My Res : " + response2);
+			if (response2.indexOf("error") == -1) {
 				// JSONObject UserLogin=new JSONObject(response);
-				JSONObject ja = new JSONObject(response);
+				JSONObject ja = new JSONObject(response2);
 				Log.i("after json", "ok");
 
 				u = new User(ja.getJSONObject("user"));
 
-				Log.i("role short nm", "Hello: " + u.getRole_short_name());
+				//Log.i("role short nm", "Hello: " + u.getRole_short_name());
 				flagResponse = true;
 				Log.v("end fetchJson()", "Hello run ok");
 			} else {
@@ -385,4 +383,101 @@ public class MainActivity extends Activity {
 	 * R.id.action_settings) { return true; } return
 	 * super.onOptionsItemSelected(item); }
 	 */
+	
+	public void makeServiceCall(Context context,String UserName,String password)
+	{
+		final Context c=context;
+		
+		final String u=UserName;
+		final String p=password;
+		
+		new AsyncTask<Void, Void, Void>(){
+			
+			String response="";
+			
+			Boolean success=false;
+
+			@Override
+			protected void onPreExecute() {
+				progressDialog=null;
+				progressDialog=ProgressDialog.show(c, "Connecting...", "Please Wait...",true);
+				progressDialog.show();
+			}
+			
+			@Override
+			protected Void doInBackground(Void... params) {
+				ServiceHandler sh=new ServiceHandler();
+				response=sh.login(u, p);
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Void result) {
+				
+				try {
+					Log.i("MAA", response);
+					JSONObject obj=new JSONObject(response).getJSONObject("user");							
+					GlobalJSONObjects.getInstance().setUser(new User(obj));
+					Log.i("MAA",GlobalJSONObjects.getInstance().getUser().getFull_name());
+					success=true;
+					
+				} catch (JSONException e) {
+
+					try {
+						ErrorObj errObj=new ErrorObj(response);
+						Toast.makeText(c, errObj.getComment(), Toast.LENGTH_SHORT).show();
+					} catch (JSONException e1) {
+						Log.e("MAA", "error in processing ERROR JSON");
+						e1.printStackTrace();
+					}
+
+					Log.e("MAA", "error in processing JSON");
+					e.printStackTrace();
+					
+				}				
+				
+				if(success)
+				{
+					
+					mEditor = mSharedPreferences.edit();
+
+					mEditor.putString("tmp_username", uname);
+					mEditor.putString("tmp_password", pwd);
+					
+					mEditor.commit();
+					
+					if (cbRememberMe.isChecked()) {
+
+						mEditor = mSharedPreferences.edit();
+
+						mEditor.putString("Username", uname);
+						mEditor.putString("Password", pwd);
+						
+						mEditor.commit();
+					}
+					else
+					{
+						mEditor = mSharedPreferences.edit();
+
+						mEditor.remove("Username");
+						mEditor.remove("Password");
+						
+						mEditor.commit();
+					}
+					
+					progressDialog.dismiss();
+					
+					Intent i = new Intent(getApplicationContext(),UserCourseActivity.class);
+					
+					startActivity(i);
+					
+				}
+				
+				progressDialog.dismiss();
+				
+			}
+		
+		}.execute();
+	}
+	
 }

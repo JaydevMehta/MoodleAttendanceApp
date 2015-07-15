@@ -1,5 +1,8 @@
 package com.example.moodleattendanceapp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -198,6 +201,14 @@ public class Sessions extends JSONObject implements Parcelable
 		dest.writeString(groupid);
 		dest.writeString(sessdate);
 		
+	}
+	
+	public String getSessionDate()
+	{
+		long dv = Long.valueOf(sessdate)*1000;// its need to be in milisecond
+		Date df = new java.util.Date(dv);
+		String vv = new SimpleDateFormat("dd-MM-yyyy hh:mm a").format(df);
+		return vv;
 	}
 	
 }

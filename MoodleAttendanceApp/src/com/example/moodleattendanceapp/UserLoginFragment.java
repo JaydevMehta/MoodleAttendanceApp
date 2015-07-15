@@ -175,7 +175,7 @@ public class UserLoginFragment extends Fragment {
 
 				b.putString("user_id", u.getId());
 				b.putString("user_fullname", u.getFull_name());
-				b.putString("user_role_name", u.getRole_short_name());
+				//b.putString("user_role_name", u.getRole_short_name());
 				b.putString("user_propic_url", u.getProfile_pic_url());
 				sf.setArguments(b);
 				
@@ -233,7 +233,7 @@ public class UserLoginFragment extends Fragment {
 
 				u = new User(ja.getJSONObject("user"));
 
-				Log.i("role short nm", "Hello: " + u.getRole_short_name());
+				//Log.i("role short nm", "Hello: " + u.getRole_short_name());
 				flagResponse = true;
 				Log.v("end fetchJson()", "Hello run ok");
 			} else {

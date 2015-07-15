@@ -5,6 +5,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="C:/Users/Jaydev Mehta/git/MoodleAttendanceApp/MoodleAttendanceApp/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ACER/Documents/GitHub/MoodleAttendanceApp/MoodleAttendanceApp/libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

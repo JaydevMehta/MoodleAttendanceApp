@@ -66,7 +66,7 @@ public class Course extends JSONObject implements Parcelable
     		try
     		{
 
-    		JSONArray attendanceArr=obj.getJSONArray("attendance");
+    			JSONArray attendanceArr=obj.getJSONArray("attendance");
 	    		for(int i=0;i<attendanceArr.length();i++)
 	    		{
 	    			Attendance a=new Attendance(attendanceArr.getJSONObject(i));
@@ -151,5 +151,28 @@ public class Course extends JSONObject implements Parcelable
 		dest.writeString(full_name);
 		
 	}
+	
+	
+	public void refreshAttendance(JSONObject obj)
+	{
+		
+		try {
+			JSONArray attendanceArr = obj.getJSONArray("attendance");
+			attendance.clear();
+			for(int i=0;i<attendanceArr.length();i++)
+			{
+				Attendance a=new Attendance(attendanceArr.getJSONObject(i));
+				attendance.add(a);
+
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
 
 }

@@ -1,6 +1,7 @@
 package com.example.moodleattendanceapp;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 
@@ -21,6 +22,7 @@ import android.os.Parcelable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class User extends JSONObject implements Parcelable
 {
@@ -90,12 +92,12 @@ public class User extends JSONObject implements Parcelable
     			course.add(a);
     		}
     		profile_pic_url=obj.getString("profile_pic_url");
-    		first_name=obj.getString("first_name");
+    		first_name=obj.getString("first_name").substring(0,1).toUpperCase() + obj.getString("first_name").substring(1);
     		user_name=obj.getString("user_name");
     		role_id=obj.getString("role_id");
-    		role_short_name=obj.getString("role_short_name");
-    		last_name=obj.getString("last_name");
-    		full_name=obj.getString("full_name");
+    		role_short_name=obj.getString("role_short_name").substring(0,1).toUpperCase() + obj.getString("role_short_name").substring(1);
+    		last_name=obj.getString("last_name").substring(0,1).toUpperCase() + obj.getString("last_name").substring(1);
+    		full_name=first_name +" "+ last_name;
     	}
     	catch(JSONException e)
     	{
@@ -171,9 +173,24 @@ public class User extends JSONObject implements Parcelable
         this.role_id = role_id;
     }
 
-    public String getRole_short_name ()
+    public String getRole_short_name (Boolean returnRaw)
     {
-        return role_short_name;
+    	if(!returnRaw)
+    	{
+	    	if(role_short_name.contains("teacher"))
+	    	{
+	    		return "Teacher";
+	    	}
+	    	if(role_short_name.contains("student"))
+	    	{
+	    		return "Student";
+	    	}
+	    	return role_short_name;
+    	}
+    	else
+    	{
+    		return role_short_name;
+    	}
     }
 
     public void setRole_short_name (String role_short_name)
@@ -222,6 +239,64 @@ public class User extends JSONObject implements Parcelable
 		dest.writeString(role_short_name);
 		dest.writeString(last_name);
 		dest.writeString(full_name);
+		
+	}
+	
+	public void refreshCourses(JSONObject obj)
+	{
+		
+		
+		try {
+			JSONArray coursesArr = obj.getJSONArray("course");
+			course.clear();
+			for(int i=0;i<coursesArr.length();i++)
+			{
+				Course a=new Course(coursesArr.getJSONObject(i));
+				course.add(a);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public String getSessionsStatus(String type)
+	{
+		int completed=0;
+		int upcomming=0;
+		int total=0;
+		for (Course c : course) {
+			for (Attendance a : c.getAttendance()) {
+				for (Sessions s : a.getSessions()) {
+					total++;					
+					if(s.getLasttaken().equals(null) || s.getLasttaken().isEmpty() || s.getLasttaken().contains("null"))
+					{
+						upcomming++;
+					}
+					else
+					{
+						
+						completed++;
+					}
+				}
+			}
+		}
+		
+		if(type.equals("total"))
+		{
+			return completed+"/"+total;
+		}
+		if(type.equals("completed"))
+		{
+			return completed+"";
+		}
+		if(type.equals("upcomming"))
+		{
+			return upcomming+"";
+		}
+		
+		return total+"";
 		
 	}
 

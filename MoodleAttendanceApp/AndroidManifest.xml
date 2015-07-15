@@ -32,6 +32,17 @@
             android:name=".UserCourseActivity"
             android:label="@string/title_activity_user_course" >
         </activity>
+        <activity
+            android:name=".CourseAttendanceActivity"
+            android:label="@string/title_activity_course_attendance"
+            android:parentActivityName=".UserCourseActivity" >
+        </activity>
+        
+        <activity
+            android:name=".SessionActivity"
+            android:label="@string/title_activity_session"
+            android:parentActivityName=".CourseAttendanceActivity" >
+        </activity>
     </application>
 
 </manifest>

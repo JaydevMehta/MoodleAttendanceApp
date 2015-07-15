@@ -4,26 +4,31 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class CourseListAdapter extends BaseAdapter implements OnClickListener {
+public class CourseListAdapter extends BaseAdapter implements OnItemClickListener {
 
 	/*********** Declare Used Variables *********/
 	   private Activity activity;
-	   private ArrayList data;
+	   private ArrayList<Course> data;
 	   private static LayoutInflater inflater=null;
 	   public Resources res;
-	   Course tempValues=null;
+	   //Course tempValues=null;
 	   int i=0;
 	    
-	   public CourseListAdapter(Activity a, ArrayList d,Resources resLocal) {
+	   public CourseListAdapter(Activity a, ArrayList<Course> d,Resources resLocal) {
 	        
 	           activity = a;
 	           data=d;
@@ -54,6 +59,7 @@ public class CourseListAdapter extends BaseAdapter implements OnClickListener {
 	   public static class ViewHolder{
 	        
 	       public TextView tvCourseName;
+	       
 	       /*public TextView Workreq;
 	       public TextView Sdate;
 	       public TextView Edate;*/
@@ -75,6 +81,7 @@ public class CourseListAdapter extends BaseAdapter implements OnClickListener {
 
 	           holder = new ViewHolder();
 	           holder.tvCourseName = (TextView) vi.findViewById(R.id.tvCourseFullName);
+	           holder.tvCourseName.setTextColor(Color.WHITE);
 	/*           holder.Workreq=(TextView)vi.findViewById(R.id.txtWorkRequest);
 	           holder.Sdate=(TextView)vi.findViewById(R.id.txtStartDate);
 	           holder.Edate=(TextView)vi.findViewById(R.id.txtEndDate);*/
@@ -96,46 +103,41 @@ public class CourseListAdapter extends BaseAdapter implements OnClickListener {
 	       {
 	    	   Log.i("else Data size check","ok");
 	           /***** Get each Model object from Arraylist ********/
-	           tempValues=null;
-	           tempValues = ( Course ) data.get( position );
-	            
+	          // tempValues=null;
+	          // tempValues = ( Course ) data.get( position );
+	           
+	    	   
+	    	   
 	           /************  Set Model values in Holder elements ***********/
 
-	            holder.tvCourseName.setText(tempValues.getFull_name());
+	            holder.tvCourseName.setText(data.get(position).getFull_name());
 	           /* holder.Workreq.setText(tempValues.getWorkRequest());
 	            holder.Sdate.setText(tempValues.getStartDate());
 	            holder.Edate.setText(tempValues.getEndDate());*/
 	              
 	            /******** Set Item Click Listner for LayoutInflater for each row *******/
 
-	            vi.setOnClickListener(new OnItemClickListener( position ));
+	            //vi.setOnClickListener(new OnItemClickListener( position ));
 	       }
 	       return vi;
 	   }
-	    
-	   @Override
-	   public void onClick(View v) {
-	           Log.v("CustomAdapter", "=====Row button clicked=====");
-	   }
-	    
-	   /********* Called when Item click in ListView ************/
-	   private class OnItemClickListener  implements OnClickListener{           
-	       private int mPosition;
-	        
-	       OnItemClickListener(int position){
-	            mPosition = position;
-	       }
-	        
-	       @Override
-	       public void onClick(View arg0) {
 
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		
+		//Course c=(Course)data.get(position);
+		
+		Log.i("MAA", "id is: "+data.get(position).getId()+" name is: "+data.get(position).getShort_name());
+		
+		Intent i=new Intent(activity,CourseAttendanceActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		i.putExtra("position", position);
+		activity.getApplicationContext().startActivity(i);
+		
+	}
+	    
+
+	    
 	  
-	         UserCourseActivity sct = (UserCourseActivity)activity;
-
-	        /****  Call  onItemClick Method inside CustomListViewAndroidExample Class ( See Below )****/
-
-	           sct.onItemClick(mPosition);
-	       }               
-	   }
 	
 }

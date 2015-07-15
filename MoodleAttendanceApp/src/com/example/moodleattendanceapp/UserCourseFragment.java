@@ -63,7 +63,7 @@ public class UserCourseFragment extends Fragment{
         // image - ImageView 
         imgLoader.DisplayImage(user_propic_url, loader, imgProPic);
 		
-        mPlanetTitles = getResources().getStringArray(R.array.CountryArray);
+        //mPlanetTitles = getResources().getStringArray(R.array.CountryArray);
         
 		Log.i("call course","course frag");
 		

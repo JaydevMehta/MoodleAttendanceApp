@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D3CFDF"
+    android:background="#f7993c"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -25,6 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical" >
 
             <TextView
@@ -32,45 +33,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="131040119001_HARDIK BADGUJAR"
-                android:textColor="#2E64FE"
-                android:textSize="15sp" />
+                android:textColor="#fff"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tvUserRole"
+                android:id="@+id/tvEnrolledCourses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Enrolled Courses: "
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSessions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:text="Faculty"
-                android:textColor="#2E64FE"
-                android:textSize="15sp" />
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+    <android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coursesSwipeContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="15dp">
 
-        <TextView
-            android:id="@+id/tvCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Enrolled Course"
-            android:textColor="#2E64FE"
-            android:textSize="25sp" />
-
+        
+        
+        
         <ListView
+            android:padding="5dp"
             android:id="@+id/lvCourseList"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:divider="#585858"
-            android:dividerHeight="1dp" >
+            android:divider="#f7993c"
+            
+            android:background="@drawable/border_shadow"
+            android:dividerHeight="1dp"
+            android:layout_marginTop="15dp" >
         </ListView>
-    </LinearLayout>
+    
+        
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
