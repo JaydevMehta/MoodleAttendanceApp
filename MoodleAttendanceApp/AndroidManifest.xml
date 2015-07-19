@@ -37,11 +37,15 @@
             android:label="@string/title_activity_course_attendance"
             android:parentActivityName=".UserCourseActivity" >
         </activity>
-        
         <activity
             android:name=".SessionActivity"
             android:label="@string/title_activity_session"
             android:parentActivityName=".CourseAttendanceActivity" >
+        </activity>
+        <activity
+            android:name=".FillAttendanceActivity"
+            android:label="@string/title_activity_fill_attendance"
+            android:parentActivityName=".SessionActivity" >
         </activity>
     </application>
 

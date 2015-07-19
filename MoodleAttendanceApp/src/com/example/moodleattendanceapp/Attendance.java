@@ -194,4 +194,30 @@ public class Attendance extends JSONObject implements Parcelable
 	}
 	
 	
+	public String setStatusPresent()
+	{
+		for(Statuses s:statuses)
+		{
+			if(s.getAcronym().equals("P") || s.getDescription().equals("Present"))
+			{
+				return s.getId();
+			}
+		}
+		return null;
+	}
+	
+	
+	public String setStatusAbsent()
+	{
+		for(Statuses s:statuses)
+		{
+			if(s.getAcronym().equals("A") || s.getDescription().equals("Absent"))
+			{
+				return s.getId();
+			}
+		}
+		return null;
+	}
+	
+	
 }

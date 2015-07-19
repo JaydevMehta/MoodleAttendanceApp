@@ -144,4 +144,6 @@ public class Statuses extends JSONObject implements Parcelable
 		dest.writeString(deleted);
 		
 	}
+	
+	
 }

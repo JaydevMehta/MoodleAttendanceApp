@@ -1,10 +1,13 @@
 package com.example.moodleattendanceapp;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GlobalJSONObjects {
 	
 	private User user=null;
+	
+	private HashMap<String, ArrayList<PostAttendanceData>> attendanceDataMap=new HashMap<>();
 	
 	private static GlobalJSONObjects instance=null;
 	
@@ -33,6 +36,11 @@ public class GlobalJSONObjects {
 	public void clean()
 	{
 		user=null;
+	}
+	
+	public void addToAttendanceDataMap(String sessionId,ArrayList<PostAttendanceData> attendanceData)
+	{
+		attendanceDataMap.put(sessionId, attendanceData);
 	}
 	
 }

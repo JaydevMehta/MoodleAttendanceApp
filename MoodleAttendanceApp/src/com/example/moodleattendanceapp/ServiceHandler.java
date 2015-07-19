@@ -17,9 +17,9 @@ public class ServiceHandler {
 	
 	static String response = null;
     
-    private String host="http://192.168.1.100/webservice.php?";		//Local
+    //private String host="http://192.168.1.100/webservice.php?";		//Local
     
-    //private String host="http://rutvik.ddns.net/webservice.php?";		//Internet
+    private String host="http://rutvik.ddns.net/webservice.php?";		//Internet
 
     
 	ServiceHandler()
@@ -47,12 +47,22 @@ public class ServiceHandler {
 	{
 		return executeCall(host+"method=get_sessions&course_id="+courseId+"&attendance_type_id="+attendanceTypeId);
 	}
+	
+	public String getAttendanceData(String token,String sessionId)
+	{
+		return executeCall(host+"method=get_attendance&token="+token+"&session_id="+sessionId);
+	}
  
+	public String uploadAttendanceData(String sessionId,String statusSet,String takenBy,String data)
+	{
+		return executeCall(host+"method=add_attendance&session_id="+sessionId+"&status_set="+statusSet+"&taken_by="+takenBy+"&data={\"d\":"+data+"}");
+	}
     		
 	public String executeCall(String url)
 	{
 		
-		try {
+		try
+		{
             // http client
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpEntity httpEntity = null;

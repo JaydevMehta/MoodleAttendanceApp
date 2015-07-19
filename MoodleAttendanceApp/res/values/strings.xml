@@ -8,5 +8,6 @@
     <string name="title_activity_course_attendance">CourseAttendanceActivity</string>
     <string name="title_activity_show_session">ShowSessionActivity</string>
     <string name="title_activity_session">SessionActivity</string>
+    <string name="title_activity_fill_attendance">FillAttendanceActivity</string>
 
 </resources>

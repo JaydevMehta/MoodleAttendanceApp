@@ -415,7 +415,7 @@ public class MainActivity extends Activity {
 			protected void onPostExecute(Void result) {
 				
 				try {
-					Log.i("MAA", response);
+					//Log.i("MAA", response);
 					JSONObject obj=new JSONObject(response).getJSONObject("user");							
 					GlobalJSONObjects.getInstance().setUser(new User(obj));
 					Log.i("MAA",GlobalJSONObjects.getInstance().getUser().getFull_name());

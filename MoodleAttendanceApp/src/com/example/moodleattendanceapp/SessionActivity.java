@@ -274,9 +274,6 @@ public class SessionActivity extends Activity {
 		           }
 		           else{
 		        	   
-		        	   
-		           
-		        	   
 		        	   holder.ivSessionStatus.setImageResource(R.drawable.checkmark_128);
 		           
 		           }
@@ -291,7 +288,15 @@ public class SessionActivity extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 			
 			
-			//Log.i("MAA", data.get(position).getName());
+			Intent i=new Intent(context,FillAttendanceActivity.class);
+			i.putExtra("course_position", coursePosition);
+			i.putExtra("attendance_position", attendancePosition);
+			i.putExtra("session_id", sessionArrayList.get(position).getId());
+			i.putExtra("title", sessionArrayList.get(position).getSessionDate());
+			i.putExtra("sub_title", sessionArrayList.get(position).getDescription());
+			
+			
+			startActivity(i);
 			
 			
 		}

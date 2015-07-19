@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+   
+    
+    
+    <item android:id="@+id/action_save_attendance"
+          android:icon="@drawable/checkmark_128"
+          android:title="Save"
+          android:showAsAction="always"/>
+
+   <item android:id="@+id/action_set_all_present"
+       	android:title="All Present"
+          android:showAsAction="never"/>
+   
+    <item android:id="@+id/action_set_all_absent"
+       	android:title="All Absent"
+          android:showAsAction="never"/>
+
+</menu>

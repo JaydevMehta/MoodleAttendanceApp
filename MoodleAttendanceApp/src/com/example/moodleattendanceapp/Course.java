@@ -78,6 +78,23 @@ public class Course extends JSONObject implements Parcelable
     		{
     			
     		}
+    		
+    		try
+    		{
+
+    			JSONArray enrolledStudentsArr=obj.getJSONArray("enrolled_students");
+	    		for(int i=0;i<enrolledStudentsArr.length();i++)
+	    		{
+	    			EnrolledStudents a=new EnrolledStudents(enrolledStudentsArr.getJSONObject(i));
+	    			enrolledStudents.add(a);
+
+	    		}
+    		}
+    		catch(Exception e)
+    		{
+    			
+    		}
+    		
     	}
     	catch (JSONException e) {
 			throw e;
